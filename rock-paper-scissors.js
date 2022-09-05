@@ -46,29 +46,36 @@ function game(playerSelection) {
 }
 
 function updateResults(res, text) {
-  let resultsDiv = document.getElementsByClassName('results')[0];
-  let para = document.createElement('p');
-  let node = document.createTextNode(
-    `You chose: ${text}. The computer chose: ${res[1]}. ${res[0]}`
-    );
-  para.appendChild(node);
-  resultsDiv.appendChild(para);
+  let resultsDiv = document.getElementById('results')
+  if (!resultsDiv.hasChildNodes()) {
+    let para = document.createElement('p');
+    let node = document.createTextNode(
+      `You chose: ${text}. The computer chose: ${res[1]}. ${res[0]}`
+      );
+    para.appendChild(node);
+    resultsDiv.appendChild(para);
+  } else {
+    let para = resultsDiv.firstChild
+    para.innerText = `You chose: ${text}. The computer chose: ${res[1]}. ${res[0]}`;
+  }
 }
 
 function updateScore(res) {
   if (res[0] === 'You win!') {
     playerScore += 1;
-  } else if (res[1] === 'Better luck next time.') {
+  } else if (res[0] === 'Better luck next time.') {
     computerScore += 1;
   }
-  let resultsDiv = document.getElementsByClassName('results')[0];
-  let para = document.createElement('p');
-  let node = document.createTextNode(
-    `You: ${playerScore}. Computer: ${computerScore}`);
-  para.appendChild(node);
-  resultsDiv.appendChild(para);
+  let updatedComputerScore = document.getElementById('computer');
+  let updatedPlayerScore = document.getElementById('player');
+
+  updatedComputerScore.innerText = `${computerScore}`;
+  updatedPlayerScore.innerText = `${playerScore}`;
 }
 
+function removeText() {
+
+}
 function startGame() {
   const buttons = document.querySelectorAll('button');
 
