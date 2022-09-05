@@ -71,19 +71,33 @@ function updateScore(res) {
 
   updatedComputerScore.innerText = `${computerScore}`;
   updatedPlayerScore.innerText = `${playerScore}`;
+
+  if (playerScore === 5 || computerScore === 5) {
+    finalMessage();
+  };
+
 }
 
-function removeText() {
-
+function finalMessage() {
+  let resultsDiv = document.getElementById('results')
+  let para = resultsDiv.firstChild
+  if (playerScore===5) {
+    para.innerText = 'You won five games! Congratulations.';
+  } else {
+    para.innerText = 'The computer beat you to five points.';
+  }
+  playerScore = 0;
+  computerScore = 0;
 }
 function startGame() {
   const buttons = document.querySelectorAll('button');
 
   buttons.forEach((btn) =>
     btn.addEventListener('click', () => {
-      res = game(btn.innerText);
+      let res = game(btn.innerText);
       updateResults(res, btn.innerText);
       updateScore(res);
+
     }
     )
   );
