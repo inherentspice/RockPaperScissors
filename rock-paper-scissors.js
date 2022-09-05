@@ -27,13 +27,13 @@ function playRound(playerSelection, computerSelection) {
     }
   } else if (playerSelection==="rock") {
     if (computerSelection==="paper") {
-      return "Better luck next time"
+      return "Better luck next time."
     } else {
       return "You win!"
     }
   } else {
     if (computerSelection==="rock") {
-      return "Better luck next time"
+      return "Better luck next time."
     } else {
       return "You win!"
     }
@@ -55,13 +55,28 @@ function updateResults(res, text) {
   resultsDiv.appendChild(para);
 }
 
+function updateScore(res) {
+  if (res[0] === 'You win!') {
+    playerScore += 1;
+  } else if (res[1] === 'Better luck next time.') {
+    computerScore += 1;
+  }
+  let resultsDiv = document.getElementsByClassName('results')[0];
+  let para = document.createElement('p');
+  let node = document.createTextNode(
+    `You: ${playerScore}. Computer: ${computerScore}`);
+  para.appendChild(node);
+  resultsDiv.appendChild(para);
+}
+
 function startGame() {
   const buttons = document.querySelectorAll('button');
 
   buttons.forEach((btn) =>
     btn.addEventListener('click', () => {
       res = game(btn.innerText);
-      updateResults(res, btn.innerText)
+      updateResults(res, btn.innerText);
+      updateScore(res);
     }
     )
   );
