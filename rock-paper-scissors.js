@@ -1,10 +1,13 @@
+let computerScore = 0;
+let playerScore = 0;
+
 function getComputerChoice() {
   const randomizer = Math.floor(Math.random() * 3);
 
   if (randomizer === 0) {
     return "rock"
   } else if (randomizer === 1) {
-    return "raper"
+    return "paper"
   } else {
     return "scissors"
   }
@@ -37,11 +40,31 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt("Choose paper, scissors, or rock")
-    let computerSelection = getComputerChoice()
-
-    console.log(playRound(playerSelection, computerSelection))
-  }
+function game(playerSelection) {
+  let computerSelection = getComputerChoice();
+  return [playRound(playerSelection, computerSelection), computerSelection];
 }
+
+// function updateResults() {
+
+// }
+function startGame() {
+  const buttons = document.querySelectorAll('button');
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      res = game(btn.innerText);
+
+      let resultsDiv = document.getElementsByClassName('results')[0];
+      let para = document.createElement('p');
+      let node = document.createTextNode(
+        `You chose: ${btn.innerText}. The computer chose: ${res[1]}. ${res[0]}`
+        );
+      para.appendChild(node);
+      resultsDiv.appendChild(para);
+    }
+    )
+  );
+}
+
+startGame()
